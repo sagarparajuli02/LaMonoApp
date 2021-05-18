@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "114291577268",
+    "project_id": "lamonoapp-fa6fb",
+    "storage_bucket": "lamonoapp-fa6fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114291577268:android:b8fd729fdbb94f7836a2e1",
+        "android_client_info": {
+          "package_name": "com.la.mono"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114291577268-mrv845gbokh6qr4mcphfnssqqfsugl5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASws5fLS_Xz-eI0IxGbEW3rhtn68tnNLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114291577268-mrv845gbokh6qr4mcphfnssqqfsugl5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

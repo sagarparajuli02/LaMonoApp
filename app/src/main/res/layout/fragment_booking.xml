@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+    tools:context=".BookingFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Date"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+
+        android:layout_height="wrap_content">
+
+        <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
+            android:id="@+id/datePicker"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <TextView
+        android:textColor="@color/black"
+
+        android:layout_width="wrap_content"
+        android:text="Time"
+        android:textStyle="bold"
+        android:textSize="20dp"
+
+
+        android:layout_height="wrap_content"/>
+    <com.goodiebag.horizontalpicker.HorizontalPicker
+        android:id="@+id/hpicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textSize="18sp"
+        app:itemMargin="5dp"
+        app:itemHeight="40dp"
+        app:itemWidth="40dp"
+        />
+    <TextView
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Number of Guest"
+        android:textColor="@color/black"
+
+        />
+    <EditText
+        android:layout_width="100dp"
+        android:layout_margin="20dp"
+        android:id="@+id/bookingNumber"
+        android:inputType="number"
+        android:layout_height="wrap_content"/>
+
+    <Button
+
+        android:layout_width="wrap_content"
+        android:text="Conform Booking"
+        android:id="@+id/conformBookingButton"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>
+
+</ScrollView>
