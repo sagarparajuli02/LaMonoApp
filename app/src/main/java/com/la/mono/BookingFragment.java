@@ -2,8 +2,10 @@ package com.la.mono;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
@@ -21,16 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class BookingFragment extends Fragment implements DatePickerListener {
 
 
     EditText bookingNumber;
+    TimePicker timePicker;
     Button conformBooking;
     String bookingNumberString;
+    String datePicker,timePickerString;
+
+
 
     public BookingFragment() {
         // Required empty public constructor
@@ -53,11 +57,12 @@ public class BookingFragment extends Fragment implements DatePickerListener {
         View view= inflater.inflate(R.layout.fragment_booking, container, false);
         // find the picker
         HorizontalPicker picker = view.findViewById(R.id.datePicker);
+         timePicker= view.findViewById(R.id.timePicker);
         // initialize it and attach a listener
         picker
                 .setListener(this)
                 .setDays(14)
-                .setOffset(0)
+                .setOffset(3)
 
                 .init();
         bookingNumber=view.findViewById(R.id.bookingNumber);
@@ -71,10 +76,14 @@ BookingModel bookingModel=new BookingModel();
 
         conformBooking.setOnClickListener(new View.OnClickListener(){
 
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
                  bookingNumberString=bookingNumber.getText().toString().trim();
+                int hour = timePicker.getHour();
+                int min = timePicker.getMinute();
+                String time=  hour +":"+ min;
 
 
                  if(TextUtils.isEmpty(bookingNumberString)){
@@ -82,6 +91,8 @@ BookingModel bookingModel=new BookingModel();
                 }
                  else {
                     bookingModel.setNumberofGuest(bookingNumberString);
+                   bookingModel.setBookingDate(datePicker.toString());
+                   bookingModel.setBookingTime(time);
                     myRef.push().setValue(bookingModel);
 
                      AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
@@ -115,7 +126,10 @@ BookingModel bookingModel=new BookingModel();
 
     @Override
     public void onDateSelected(DateTime dateSelected) {
-        Toast.makeText(getContext(), "Selected", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), dateSelected.toString(), Toast.LENGTH_SHORT).show();
+
+        datePicker=dateSelected.toString();
+
 
     }
 }
