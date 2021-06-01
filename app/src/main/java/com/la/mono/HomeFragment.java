@@ -2,34 +2,30 @@ package com.la.mono;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,12 +38,11 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
 
-    ViewPager2 viewPager;
-    List<MySliderList>mySliderLists;
-    MySliderAdapter adapter;
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 3;
-    LinearLayout indicatorlay;
+
+    private SliderAdapter adapter;
+    private ArrayList<SliderData> sliderDataArrayList;
+    DatabaseReference database;
+    private SliderView sliderView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,32 +77,14 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(recyclerAdapter);
         some();
 
-        viewPager = view.findViewById(R.id.viewPager);
 
-        getdata();
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
-        });
-        //NUM_PAGES =onBordingLists.size();
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == NUM_PAGES) {
-                    currentPage = 0;
-                }
-                viewPager.setCurrentItem(currentPage++, true);
-            }
-        };
-        Timer swipeTimer = new Timer();
-        swipeTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, 3000, 3000);
+        sliderDataArrayList = new ArrayList<>();
+
+        sliderView = view.findViewById(R.id.slider);
+        database = FirebaseDatabase.getInstance().getReference("PopularItems");
+
+        // calling our method to load images.
+        loadImages();
 
 
 
@@ -135,27 +112,63 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 
-    private void getdata() {
-        Call<List<MySliderList>>call= MyRetrofit.getInstance().getMyApi().getonbordingdata();
-        call.enqueue(new Callback<List<MySliderList>>() {
+
+    private void loadImages(){
+        database.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onResponse(Call<List<MySliderList>> call, Response<List<MySliderList>> response) {
-                mySliderLists=response.body();
-                adapter=new MySliderAdapter(getContext(),mySliderLists,viewPager);
-                viewPager.setAdapter(adapter);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot documentSnapshot : snapshot.getChildren()){
+
+                    SliderData sliderData = documentSnapshot.getValue(SliderData.class);
+                    SliderData model = new SliderData();
+                    model.setImage_url(sliderData.getImage_url());
+                    sliderDataArrayList.add(model);
+
+                    // after adding data to our array list we are passing
+                    // that array list inside our adapter class.
+                    adapter = new SliderAdapter(getContext(), sliderDataArrayList);
+
+                    // belows line is for setting adapter
+                    // to our slider view
+                    sliderView.setSliderAdapter(adapter);
+
+                    // below line is for setting animation to our slider.
+                    sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+
+                    // below line is for setting auto cycle duration.
+                    sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+
+                    // below line is for setting
+                    // scroll time animation
+                    sliderView.setScrollTimeInSec(3);
+
+                    // below line is for setting auto
+                    // cycle animation to our slider
+                    sliderView.setAutoCycle(true);
+
+                    // below line is use to start
+                    // the animation of our slider view.
+                    sliderView.startAutoCycle();
+
+
+                }
 
             }
 
             @Override
-            public void onFailure(Call<List<MySliderList>> call, Throwable t) {
-                Toast.makeText(getContext(), "Internal Error Occurs !!", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Fail to load slider data..", Toast.LENGTH_SHORT).show();
 
             }
         });
+
     }
+
 
 
 

@@ -7,10 +7,10 @@ import retrofit2.http.GET;
 
 public interface ApiInterface {
 
-    @GET("5f24958e1111e6c20633")
+    @GET("HomePageItems.json")
     Call<List<Movie>> getMovies();
 
 
-    @GET("f38591e849cd65c0f211")
+    @GET("Products/Rolls.json")
     Call<List<Movie>> getMenu();
 }

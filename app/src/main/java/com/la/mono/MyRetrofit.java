@@ -5,7 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyRetrofit {
-    private static final String BASE_URL="https://api.npoint.io/";
+    private static final String BASE_URL="https://lamonoapp-fa6fb-default-rtdb.firebaseio.com/";
     private static MyRetrofit myClient;
     private Retrofit retrofit;
 

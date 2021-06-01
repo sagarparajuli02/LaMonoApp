@@ -9,10 +9,28 @@ public class BookingModel {
     String numberofGuest;
     String BookingDate;
     String BookingTime;
+    String email;
+    String name;
 
 
     public BookingModel(){
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBookingDate() {

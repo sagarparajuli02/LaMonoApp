@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
 import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -55,6 +57,9 @@ public class BookingFragment extends Fragment implements DatePickerListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_booking, container, false);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         // find the picker
         HorizontalPicker picker = view.findViewById(R.id.datePicker);
          timePicker= view.findViewById(R.id.timePicker);
@@ -93,6 +98,8 @@ BookingModel bookingModel=new BookingModel();
                     bookingModel.setNumberofGuest(bookingNumberString);
                    bookingModel.setBookingDate(datePicker.toString());
                    bookingModel.setBookingTime(time);
+                   bookingModel.setEmail(user.getEmail());
+                   bookingModel.setName(user.getDisplayName());
                     myRef.push().setValue(bookingModel);
 
                      AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());

@@ -46,7 +46,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
             @Override
             public void onClick(View v) {
                 Intent activity= new Intent(context,MenuDetailsActivity.class) ;
-               context.startActivity(activity);
+                activity.putExtra("title", movieList.get(position).getTitle());
+
+                context.startActivity(activity);
 
             }
         });

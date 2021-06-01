@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 public interface MySliderApi {
 
 
-    @GET("e01a8c55acf9b656e20c")
+    @GET("PopularItems.json")
     Call<List<MySliderList>> getonbordingdata();
 }

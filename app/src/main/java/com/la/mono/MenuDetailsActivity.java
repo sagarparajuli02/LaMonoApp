@@ -1,12 +1,19 @@
 package com.la.mono;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,40 +24,49 @@ import retrofit2.Response;
 
 public class MenuDetailsActivity extends AppCompatActivity {
 
-    List<Movie> movieList;
     RecyclerView recyclerView;
-    CartItemAdapter CartItemAdapter;
+    DatabaseReference database;
+    MyAdapter myAdapter;
+    ArrayList<User> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_details);
+        Intent mIntent = new Intent();
+        mIntent.getStringExtra("title");
+        String title = getIntent().getStringExtra("title");
+        Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
 
-        movieList = new ArrayList<>();
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-        LinearLayoutManager layoutManager =new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        CartItemAdapter = new CartItemAdapter(this,movieList);
-        recyclerView.setAdapter(CartItemAdapter);
-        some();
-    }
-    private void some() {
+        recyclerView = findViewById(R.id.userList);
+        database = FirebaseDatabase.getInstance().getReference("Products/"+title);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<Movie>> call = apiService.getMenu();
+        list = new ArrayList<>();
+        myAdapter = new MyAdapter(this,list);
+        recyclerView.setAdapter(myAdapter);
 
-        call.enqueue(new Callback<List<Movie>>() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-                movieList = response.body();
-                CartItemAdapter.setMovieList(movieList);
-                Toast.makeText(MenuDetailsActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    User user = dataSnapshot.getValue(User.class);
+                    list.add(user);
+
+
+                }
+                myAdapter.notifyDataSetChanged();
 
             }
 
             @Override
-            public void onFailure(Call<List<Movie>> call, Throwable t) {
-                Toast.makeText(MenuDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
+
     }
 }
