@@ -2,10 +2,9 @@ package com.la.mono;
 
 import java.util.ArrayList;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.Image;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.list = list;
     }
 
-    public MyAdapter(ArrayList<User> list) {
-        this.list = list;
-    }
+
 
     @NonNull
     @Override
@@ -62,6 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 String json = gson.toJson(list);
                 editor.putString("tasklist", json);
                 editor.apply();
+                holder.addToCart.setText("Added");
             }
         });
 
@@ -82,7 +80,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(itemView);
 
             firstName = itemView.findViewById(R.id.tvfirstName);
-            age = itemView.findViewById(R.id.tvage);
             imageView = itemView.findViewById(R.id.image_url);
             addToCart = itemView.findViewById(R.id.addToCart);
 

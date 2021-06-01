@@ -1,27 +1,15 @@
 package com.la.mono;
 
 import java.util.ArrayList;
-
-
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
 
@@ -30,8 +18,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     ArrayList<User> list;
 
 
-    public CartAdapter(ArrayList<User> list) {
+    public CartAdapter( Context context,ArrayList<User> list) {
+        this.context=context;
         this.list = list;
+
     }
 
     @NonNull
@@ -46,14 +36,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
         User user = list.get(position);
         holder.firstName.setText(user.getItemName());
-        Glide.with(context.getApplicationContext()).load(user.getImage_url()).into(holder.imageView);
+       // Glide.with(context.getApplicationContext()).load(user.getImage_url()).into(holder.imageView);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return (list == null) ? 0 : list.size();
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

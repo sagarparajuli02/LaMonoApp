@@ -52,11 +52,9 @@ public class CartFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new CartAdapter(mExampleList);
+        mAdapter = new CartAdapter(getActivity(),mExampleList);
         mRecyclerView.setAdapter(mAdapter);
         loadData();
-        mAdapter.notifyDataSetChanged();
-
 
         return view;
     }
@@ -68,9 +66,6 @@ public class CartFragment extends Fragment {
         Toast.makeText(getContext(), json, Toast.LENGTH_SHORT).show();
         Type type = new TypeToken<ArrayList<User>>() {}.getType();
         mExampleList = gson.fromJson(json, type);
-        if (mExampleList == null) {
-            mAdapter = new CartAdapter(mExampleList);
-        }
 
 
     }
