@@ -1,6 +1,7 @@
 package com.la.mono;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,20 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         Picasso.get().load(sliderItem.getImage_url())
                 .fit().centerCrop()
         .into(viewHolder.imageView);
+
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context,PopularItemDetails.class);
+               myIntent.putExtra("itemName", sliderItem.getTitle());
+                myIntent.putExtra("imageUrl", sliderItem.getImage_url());
+                myIntent.putExtra("itemPrice",sliderItem.getItemPrice());
+
+                myIntent.putExtra("itemDescription",sliderItem.getItemDescription());
+
+                context.startActivity(myIntent);
+            }
+        });
     }
 
     @Override

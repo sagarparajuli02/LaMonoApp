@@ -127,6 +127,10 @@ public class HomeFragment extends Fragment {
                     SliderData sliderData = documentSnapshot.getValue(SliderData.class);
                     SliderData model = new SliderData();
                     model.setImage_url(sliderData.getImage_url());
+                    model.setTitle(sliderData.getTitle());
+                    model.setItemDescription(sliderData.getItemDescription());
+                    model.setItemPrice(sliderData.getItemPrice());
+
                     sliderDataArrayList.add(model);
 
                     // after adding data to our array list we are passing

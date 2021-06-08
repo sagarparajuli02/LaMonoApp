@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LaMonoApp">
-        <activity android:name=".MenuDetailsActivity"></activity>
+        <activity android:name=".PopularItemDetails"></activity>
+        <activity android:name=".MenuDetailsActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -57,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
                 String json = gson.toJson(list);
-                editor.putString("tasklist", json);
+                editor.putString("courses", json);
                 editor.apply();
                 holder.addToCart.setText("Added");
             }

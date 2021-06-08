@@ -72,6 +72,7 @@ public class BookingFragment extends Fragment implements DatePickerListener {
                 .init();
         bookingNumber=view.findViewById(R.id.bookingNumber);
 
+
         conformBooking=view.findViewById(R.id.conformBookingButton);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -93,6 +94,12 @@ BookingModel bookingModel=new BookingModel();
 
                  if(TextUtils.isEmpty(bookingNumberString)){
                     bookingNumber.setError("Enter Number of Guest");
+                }
+               
+
+                 else if ( Integer.valueOf(bookingNumber.getText().toString().trim())>10){
+                     bookingNumber.setError("Booking Should be Less then 10");
+
                 }
                  else {
                     bookingModel.setNumberofGuest(bookingNumberString);

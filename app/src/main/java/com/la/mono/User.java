@@ -1,10 +1,18 @@
 package com.la.mono;
 
+import android.widget.TimePicker;
+
 public class User {
     String image_url, itemName, itemPrice;
+    String oderPickUpTime;
 
+    public String getOderPickUpTime() {
+        return oderPickUpTime;
+    }
 
-
+    public void setOderPickUpTime(String oderPickUpTime) {
+        this.oderPickUpTime = oderPickUpTime;
+    }
 
     public String getImage_url() {
         return image_url;

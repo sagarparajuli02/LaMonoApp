@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CartFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVCourses"
+        android:layout_margin="10px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerviewCart"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@android:color/darker_gray" />
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pickUpText"
+android:layout_margin="10px"
+        android:textColor="@color/black"
+        android:text="Pick Up time"/>
+
+        <TimePicker
+            android:layout_gravity="center"
+            android:id="@+id/timePicker"
+            android:layout_width="wrap_content"
+            android:scaleY="0.7"
+            android:scaleX="0.7"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+
+    <Button
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:id="@+id/conformOrder"
+        android:text="Conform Order"
+android:layout_margin="10px"
+        android:layout_height="wrap_content">
+
+    </Button>
+</LinearLayout>
